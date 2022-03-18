@@ -1,8 +1,20 @@
 import React from 'react'
+import Dashboard from '../components/Dashboard'
+
+
+
+
 
 function Profile() {
+
   return (
-    <div>Profile</div>
+    <div>
+    <h1>Profile</h1>
+    <div className="calendar">
+    <Dashboard />
+    </div>
+    
+    </div>
   )
 }
 
