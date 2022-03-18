@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../services/auth.services";
 
-
+import { Link } from "react-router-dom";
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +30,8 @@ function Signup() {
   };
   return (
     <div>
+       <Link to="/">Home</Link>
+       <Link to="/login">Login</Link>
       <h3>SignUp</h3>
 
       <form onSubmit={handleSubmit}>

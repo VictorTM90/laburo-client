@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {loginService } from "../services/auth.services"
-
+import { Link } from "react-router-dom";
 
 
 
@@ -40,6 +40,8 @@ const handleSubmit = async(e) => {
 
   return (
     <div>
+        <Link to="/">Home</Link>
+        <Link to="/signup">Signup </Link>
         <form onSubmit={handleSubmit}>
         
         <label htmlFor='email'>Email:</label>
