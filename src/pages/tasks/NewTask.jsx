@@ -1,13 +1,12 @@
 import React from 'react'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addNewTasksService } from '../../services/taks.services';
+import { addNewTasksService } from '../../services/tasks.services';
 
 function NewTask() {
-
   //1. crear los estados que manejan la información del evento
-  const [creator,  setCreator] = useState(null)
-  const [date , setDate] = useState (null)
+  const [creator,  setCreator] = useState("")
+  const [date , setDate] = useState ("")
   const [title , setTitle] = useState ("")
   const [description , setDescription] = useState("")
   const [dueDate , setDueDate] = useState ("")
@@ -24,15 +23,15 @@ const handleSubmit = async (event) => {
   //elemento que está creando el usuario 
   const newTask = {
     // creator,
-    // date,
+    date,
     title,
-    // description,
-    // dueDate,
+    description,
+    dueDate,
     // assigned,
     // taskType,
     // teamwork,
-    // isUrgent,
-    // isDone,
+    isUrgent,
+    isDone,
   }
   try{
 
