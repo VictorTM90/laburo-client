@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-    baseURL: `${process.env.REACT_APP_SERVER_URL}/tasks`
+    baseURL: `${process.env.REACT_APP_BASE_URL}/tasks`
   })
   
   // esta configuracion nos permite enviar el Token en cada request que se haga
@@ -23,7 +23,9 @@ const service = axios.create({
 
   const addNewTasksService = (newTask) =>{
         // pasamos como parámetro lo que recogemos en el form 
+        console.log(newTask, "hola")
     return service.post("/", newTask)
+    
 }; 
 
     const getTasksDetailsService = (id) =>{
