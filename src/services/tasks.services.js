@@ -8,7 +8,7 @@ const getAllTasksService = () => {
 
 const addNewTasksService = (newTask) => {
   // pasamos como parámetro lo que recogemos en el form
-  console.log(newTask, "hola");
+  // console.log(newTask, "hola");
   return service.post(`${URL}/`, newTask);
 };
 

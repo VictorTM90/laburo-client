@@ -1,6 +1,5 @@
 import React from 'react'
 import Dashboard from '../components/Dashboard'
-import DashboardPrueba from '../components/DashboardPrueba'
 
 
 
@@ -14,7 +13,6 @@ function Profile() {
     <h1>Perfil del usuario</h1>
     <div className="calendar">
     <Dashboard /> 
-    {/* <DashboardPrueba /> */}
     </div>
     
     </div>

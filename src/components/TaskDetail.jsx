@@ -1,13 +1,29 @@
 import React from "react";
+import { useState} from "react"
+
+
 
 function TaskDetail({ task }) {
+
+  const [taskDetails, setTaskDetails] = useState(task);
+  const [editMode, setEditMode] = useState(false)
+
+
   return (
     <div>
-      <h3>{task.title}</h3>
-      <p>{task.start.toString()}</p>
-      <p>{task.end.toString()}</p>
-      <p>{task.description}</p>
+      <h3>{taskDetails.title}</h3>
+      <button
+      onClick={()=> setEditMode(!editMode)}
+      >Modificar
+      </button>
+
+      <p>{taskDetails.start.toString()}</p>
+      <p>{taskDetails.end.toString()}</p>
+      <p>{taskDetails.description}</p>
       hola que tal
+
+
+      
     </div>
   );
 }
