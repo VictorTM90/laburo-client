@@ -24,7 +24,7 @@ function NewTask() {
     //elemento que está creando el usuario
     const newTask = {
       // creator,
-      start,
+      start, 
       title,
       description,
       end,
