@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import TaskDetail from "../../components/TaskDetail";
+import TaskDetail from "../../components/TaskDetail/TaskDetail";
 import { getTasksDetailsService } from "../../services/tasks.services";
 
 function Task() {

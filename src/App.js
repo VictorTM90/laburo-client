@@ -21,6 +21,7 @@ import TeamworkList from "./pages/teamwork/TeamworkList";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 import DashboardTeam from "./components/DashboardTeam";
+import TaskDetail from "./components/TaskDetail/TaskDetail";
 
 function App() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function App() {
 
         <Route path='/profile' element={<Profile />} />
 
-        <Route path='/task/new' element={<NewTask />} />
+        <Route path='/task/new' element={<TaskDetail />} />
         <Route path='/task/:id' element={<Task />} />
 
         <Route path='/teamwork/new' element={<NewTeamwork />} />

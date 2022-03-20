@@ -23,6 +23,7 @@ service.interceptors.response.use(
     } 
     if (error.response.status === 401) {
       //cuando queramos redirigir el navegador
+      localStorage.removeItem("authToken");
       return window.location.assign("/login");
     } 
 

@@ -27,7 +27,6 @@ function Dashboard() {
     try {
       const response = await getAllTasksService();
       setAllTasks(response);
-      // console.log(response.data)
     } catch (err) {
       if (err.response.status === 401) {
         navigate("/login");
@@ -64,12 +63,9 @@ function Dashboard() {
 
     if (_id === selectedTask?._id) {
       setSelectedTask(editedTaskCopy);
+      console.log(editedTaskCopy);
     }
 
-    console.log(allTaskEdited);
-    // console.log(editedTask)
-    // console.log({ _id, start, end });
-    // console.log(allTasks);
   };
 
   const handleShowTask = (e) => {

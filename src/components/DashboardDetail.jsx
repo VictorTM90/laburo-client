@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { deleteTasksService } from "../services/tasks.services";
-import TaskDetail from "./TaskDetail";
+import TaskDetail from "./TaskDetail/TaskDetail";
 
 function DashboardDetail({ task, deleteTask }) {
 
