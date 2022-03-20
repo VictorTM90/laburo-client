@@ -7,7 +7,7 @@ function TaskDetail({ task }) {
 
   const [taskDetails, setTaskDetails] = useState(task);
   const [editMode, setEditMode] = useState(false)
-
+  console.log(taskDetails)
 
   return (
     <div>
@@ -17,13 +17,13 @@ function TaskDetail({ task }) {
       >Modificar
       </button>
 
-      <p>{taskDetails.start.toString()}</p>
-      <p>{taskDetails.end.toString()}</p>
+      <p>{taskDetails.start}</p>
+      <p>{taskDetails.end}</p>
       <p>{taskDetails.description}</p>
       hola que tal
 
 
-      
+
     </div>
   );
 }

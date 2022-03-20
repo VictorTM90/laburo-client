@@ -20,6 +20,7 @@ function NewTask() {
   const handleSubmit = async (event) => {
     // prevenir el comportamiento del form del event
     event.preventDefault();
+    console.log(event)
     //elemento que está creando el usuario
     const newTask = {
       // creator,
@@ -60,7 +61,7 @@ function NewTask() {
           type='datetime-local'
           name='start'
           value={start}
-          onChange={(e) => setStart(new Date(e.target.value))}
+          onChange={(e) => setStart(e.target.value)}
         />
         <br />
         <br />
@@ -69,7 +70,7 @@ function NewTask() {
           type='datetime-local'
           name='end'
           value={end}
-          onChange={(e) => setEnd(new Date(e.target.value))}
+          onChange={(e) => setEnd(e.target.value)}
         />
         <br />
         <label htmlFor='description'>Descripcion:</label>

@@ -99,7 +99,6 @@ function Dashboard() {
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
             editable
-            // initialView="dayGridWeek"
             initialView='timeGridWeek'
             weekends
             headerToolbar={{
