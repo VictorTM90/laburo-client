@@ -11,15 +11,15 @@ function TaskDetail({ task }) {
 
   return (
     <div>
-      <h3>{taskDetails.title}</h3>
+      <h3>{task.title}</h3>
       <button
       onClick={()=> setEditMode(!editMode)}
       >Modificar
       </button>
 
-      <p>{taskDetails.start}</p>
-      <p>{taskDetails.end}</p>
-      <p>{taskDetails.description}</p>
+      <p>{task.start}</p>
+      <p>{task.end}</p>
+      <p>{task.description}</p>
       hola que tal
 
 
