@@ -17,21 +17,20 @@ function Signup() {
     // enviar usuario al backend para crear el registro
     const user = { name, email, password };
     try {
-             await signupService(user)
-            navigate("/login")
+      await signupService(user);
+      navigate("/login");
     } catch (err) {
-      if (err.response && err.response.status === 400) {
+      // el ? es por si no hay response que no pete el código y sigue para adelante
+      if (err.response?.status === 400) {
         setErrorMessage(err.response.data.errorMessage);
         console.log(errorMessage);
-      } else {
-        navigate("/error");
       }
     }
   };
   return (
     <div>
-       <Link to="/">Home</Link>
-       <Link to="/login">Login</Link>
+      <Link to='/'>Home</Link>
+      <Link to='/login'>Login</Link>
       <h3>SignUp</h3>
 
       <form onSubmit={handleSubmit}>

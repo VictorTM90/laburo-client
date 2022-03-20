@@ -1,17 +1,20 @@
 import React from 'react'
 import Dashboard from '../components/Dashboard'
-
-
+import DashboardPrueba from '../components/DashboardPrueba'
 
 
 
 function Profile() {
 
+  
+
+
   return (
     <div>
-    <h1>Profile</h1>
+    <h1>Perfil del usuario</h1>
     <div className="calendar">
-    <Dashboard />
+    <Dashboard /> 
+    {/* <DashboardPrueba /> */}
     </div>
     
     </div>

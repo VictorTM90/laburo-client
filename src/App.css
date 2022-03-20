@@ -3,6 +3,21 @@
 }
 
 .calendar{
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboardContainer{
+  margin: 50px;
+  display:flex;
+  justify-content:space-evenly;
+}
+
+.task-link{
+  text-decoration: none;
+  color: black;
+}
+
+.listaTareasContainer{
+  margin-left: 50px;
 }
