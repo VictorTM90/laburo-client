@@ -27,7 +27,7 @@ function NewTeamworks({ teamwork }) {
   const [search, setSearch] = useState("");
   const [members, setMembers] = useState([]);
   const [filteredMembers, setFilteredMembers] = useState([]);
-  const [addmembers, setAddmembers] = useState([]);
+  const [addmembers, setAddmembers] = useState([null]);
 
   useEffect(() => {
     searchMembers();
@@ -56,15 +56,23 @@ function NewTeamworks({ teamwork }) {
     setMembers(response);
   };
 
+  // const handleAddMember = (user) => {
+  //   console.log(user, 'miembro')
+    
+  //    setAddmembers([...addmembers, user])
+  //   console.log(addmembers, 'array')
+  // }
   
   const handleAddMember = (e) => {
-    console.log(e.target.value);
+    // console.log(addmembers, 'members');
+    console.log(e, 'event');
+    console.log(e.target, 'target');
     setAddmembers([...addmembers, e.target.name = e.target.value]);
-   
+    // console.log(addmembers, 'members updated');
     const teamWorkDetailsCopy = {...teamworkDetails}
-    
+    // console.log(teamWorkDetailsCopy, 'copy')
     teamWorkDetailsCopy.members = addmembers
-   
+    // console.log(teamWorkDetailsCopy.members, 'members')
     setTeamworkDetails(teamWorkDetailsCopy);
   };
 
@@ -97,13 +105,19 @@ function NewTeamworks({ teamwork }) {
     return <h3>...Loadding</h3>;
   }
 
-  return (
-    <div>
-      {id && (
+  const showButton = () => {
+    return (
+      id && (
         <button onClick={() => setEditMode(!editMode)}>
           {editMode ? "Cancelar" : "Modificar"}
         </button>
-      )}
+      )
+    )
+  }
+
+  return (
+    <div>
+      {showButton()}
       {editMode ? (
         <div>
           <label htmlFor="name">Nombre Teamwork</label>
@@ -121,19 +135,25 @@ function NewTeamworks({ teamwork }) {
             value={search}
             onChange={handleChangeSearch}
           />
-          {filteredMembers.map((eachmember) => {
+          
+
+          {filteredMembers.map(eachmember => {
             console.log("DETALLES EACHMEMBER", eachmember)
             return (
                 <React.Fragment key= {eachmember._id}>
-
+                  
                  <li>{eachmember.name}</li>
-                <button value = {eachmember._id} onClick={handleAddMember}>Añadir miembro</button>
-                {/* <button onClick={()=>(setAddmembers([...addmembers, eachmember]))}>Añadir miembro</button> */}
+
+                {/* <button value = {eachmember} onClick={handleAddMember}>Añadir miembro</button> */}
+                
+                {/* <button  onClick={handleAddMember(eachmember)}>Añadir miembro</button> */}
+
+                <button onClick={()=>(setAddmembers([...addmembers, eachmember]))}>Añadir miembro</button>
                 
                 </React.Fragment>
             );
-          })}
-          {/* aqui van los dos search */}
+           })}
+      
           <br />
           {editMode && <button onClick={handleSubmit}> Guardar </button>}
         </div>

@@ -43,7 +43,7 @@ function App() {
     <div className='App'>
       <button onClick={handleLogout}>Log out</button>
       {/* <Navbar isLoggedIn ={isLoggedIn}/> */}
-
+      <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
 

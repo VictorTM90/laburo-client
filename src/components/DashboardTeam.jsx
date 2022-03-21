@@ -26,6 +26,9 @@ function DashboardTeam() {
   const getAllTasks = async () => {
     try {
       const response = await getAllTasksService();
+      //filtrarlo por el id del grupo id 
+
+      
       setAllTasks(response);
     } catch (err) {
       if (err.response.status === 401) {
