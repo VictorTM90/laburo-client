@@ -44,7 +44,7 @@ function Dashboard() {
   const handleDayChange = async (e) => {
     const { _id } = e.event._def.extendedProps;
     const { start, end } = e.event._instance.range;
-    console.log(e.event._instance.range);
+    // console.log(e.event._instance.range);
     //aquí esta guardando la task original que estoy moviendo /modificando
     const editedTask = allTasks.find((eachTask) => eachTask._id === _id);
     // con el spread hacemos un clone de la task editada y solo quiero modificar las fechas end y start ( que son los parametros nuevos )
@@ -63,7 +63,7 @@ function Dashboard() {
 
     if (_id === selectedTask?._id) {
       setSelectedTask(editedTaskCopy);
-      console.log(editedTaskCopy);
+      // console.log(editedTaskCopy);
     }
 
   };
@@ -111,6 +111,8 @@ function Dashboard() {
             events={allTasks}
             eventChange={handleDayChange}
             eventClick={handleShowTask}
+            eventColor="orange"
+            // eventBorderColor="red"
           />
         </div>
         {selectedTask && (

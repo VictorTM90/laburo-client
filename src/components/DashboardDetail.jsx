@@ -15,7 +15,7 @@ function DashboardDetail({ task, deleteTask }) {
     <div className='listaTareasContainer'>
       <h2>Tarea</h2>
       <Link to={`/task/${task._id}`} className='task-link'>
-        <TaskDetail task={task} />
+        <TaskDetail task={task}/>
       </Link>
       <div>
         <button onClick={handleRemove}>Eliminar</button>
