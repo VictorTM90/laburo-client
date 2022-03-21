@@ -56,7 +56,7 @@ function App() {
         <Route path='/task/:id' element={<Task />} />
 
         <Route path='/teamwork/new' element={<NewTeamwork />} />
-        <Route path='/teamwork/:id' element={<Teamwork />} />
+        <Route path='/teamwork/:id' element={<NewTeamwork />} />
         <Route path='/teamwork/:id/edit' element={<Teamwork />} />
 
         <Route path='/teamwork' element={<TeamworkList />} />

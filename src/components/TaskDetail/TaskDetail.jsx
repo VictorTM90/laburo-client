@@ -16,8 +16,8 @@ function TaskDetail({ task }) {
       end: new Date(),
       description: "",
       isUrgent: false,
-      // assigned,
       //taskType,
+      // assigned,
       // teamwork,
       isDone: "",
     }
@@ -47,11 +47,12 @@ function TaskDetail({ task }) {
     e.preventDefault();
     if (id) {
       await updateTasksService(id, taskDetails);
+      setEditMode(!editMode);
     } else {
       const response = await addNewTasksService(taskDetails);
       navigate(`/task/${response._id}`);
     }
-    setEditMode(!editMode);
+    
   };
 
   //las funciones que no son de react (no modifican ningún estado) deberían de estar en un archivo de js
