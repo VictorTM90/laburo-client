@@ -13,7 +13,7 @@ import Profile from "./pages/Profile";
 import Task from "./pages/tasks/Task.jsx";
 import NewTask from "./pages/tasks/NewTask.jsx";
 
-import Teamwork from "./pages/teamwork/Teamwork";
+
 import NewTeamworks from "./pages/teamwork/NewTeamworks.jsx";
 import TeamworkList from "./pages/teamwork/TeamworkList";
 
@@ -57,7 +57,7 @@ function App() {
 
         <Route path='/teamwork/new' element={<NewTeamworks />} />
         <Route path='/teamwork/:id' element={<NewTeamworks />} />
-        <Route path='/teamwork/:id/edit' element={<Teamwork />} />
+        <Route path='/teamwork/:id/edit' element={<NewTeamworks />} />
 
         <Route path='/teamwork' element={<TeamworkList />} />
 

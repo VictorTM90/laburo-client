@@ -10,7 +10,7 @@ import styles from "./TaskDetail.module.css";
 function TaskDetail({ task }) {
   const [taskDetails, setTaskDetails] = useState(
     task || {
-      //creator:
+      creator: "",
       title: "",
       start: new Date(),
       end: new Date(),
@@ -24,7 +24,6 @@ function TaskDetail({ task }) {
   );
 
   const location = useLocation();
-  console.log(location);
   const { id } = useParams();
   const [editMode, setEditMode] = useState(
     !location.pathname.includes("/profile") && !id

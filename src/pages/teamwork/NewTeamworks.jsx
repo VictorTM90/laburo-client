@@ -4,60 +4,58 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   addNewTeamworkService,
   updateTeamworkService,
-  deleteTeamworkService,
+  getTeamworkDetailsService,
+  removeMemberService,
 } from "../../services/teamwork.services.js";
 import { getAllUsersService } from "../../services/user.services.js";
 
-function NewTeamworks({ teamwork, deleteTeamwork }) {
-  // traer usuarios
+function NewTeamworks() {
+  
   const { id } = useParams();
-  const navigate = useNavigate();
-
-  // estado del teamWork
   const [teamworkDetails, setTeamworkDetails] = useState(
-    teamwork || {
+      [] || {
       name: "",
-      creator: "",
       members: [],
     }
-  );
-  console.log(teamwork)
-  // edit mode
-  const [editMode, setEditMode] = useState(!id);
-  const [search, setSearch] = useState("");
-  const [members, setMembers] = useState([]);
-  const [filteredMembers, setFilteredMembers] = useState([]);
-  const [addmembers, setAddmembers] = useState([]);
-
-  useEffect(() => {
-    searchMembers();
-  }, []);
-
-  // viene la función para ejecutar el search
-  const handleChangeSearch = (e) => {
-    // actualiza el estado del search
-    setSearch(e.target.value);
-
-    if (!e.target.value) {
-      setFilteredMembers([]);
-      return;
-    }
-    const filtMember = members.filter((eachmember) => {
-      return eachmember.name.includes(e.target.value) && eachmember.name;
-    });
-    // pasa el valor del input a la función
-    setFilteredMembers(filtMember);
-  };
-
-  const searchMembers = async () => {
-    const response = await getAllUsersService();
-
-    setMembers(response);
-  };
-
+    );
+    const [editMode, setEditMode] = useState(id ? false : true);
+    const [search, setSearch] = useState("");
+    const [members, setMembers] = useState([]);
+    const [filteredMembers, setFilteredMembers] = useState([]);
+    const [addmembers, setAddmembers] = useState([]);
+    const navigate = useNavigate();
+    
+    
+    useEffect(() => {
+      teamworkDetail()
+      searchMembers();
+    }, []);
+    
+    // función para ejecutar en input
+    const handleChangeSearch = (e) => {
+      // actualiza el estado del search
+      setSearch(e.target.value);
+      
+      if (!e.target.value) {
+        setFilteredMembers([]);
+        return;
+      }
+      const filtMember = members.filter((eachmember) => {
+        return eachmember.name.includes(e.target.value) && eachmember.name;
+      });
+      // pasa el valor del input a la función
+      setFilteredMembers(filtMember);
+    };
+    
+    //buscar miembros en la base de datos
+    const searchMembers = async () => {
+      const response = await getAllUsersService();
+      
+      setMembers(response);
+    };
+   
+  //Añadir miembros al equipo
   const handleAddMember = (user) => {
-    console.log(user, "miembro");
-
     setAddmembers([...addmembers, user]);
 
     const teamWorkDetailsCopy = { ...teamworkDetails };
@@ -76,43 +74,61 @@ function NewTeamworks({ teamwork, deleteTeamwork }) {
     setTeamworkDetails(teamWorkDetailsCopy);
   };
 
+  //aqui llamamos a teamwork por el id
+  
+  const teamworkDetail = async () =>{
+    try {
+      const response = await getTeamworkDetailsService(id);
+      setTeamworkDetails(response)
+      
+    } catch (error) {
+      navigate("/error");
+    }
+  };
+
+  //Función para el envío del formulario
   const handleSubmit = async (e) => {
     if (id) {
       await updateTeamworkService(id, teamworkDetails);
     } else {
-      //MAP de id de members
-
       const response = await addNewTeamworkService(teamworkDetails);
       navigate(`/teamwork/${response._id}`);
     }
     setEditMode(!editMode);
   };
 
-  
-  //eliminar teamwork
-  const handleRemove = async () => {
-    await deleteTeamworkService(teamwork._id);
-    console.log(teamwork._id);
-    deleteTeamwork(teamwork._id);
-  };
+  //Función para eliminar un miembro del equipo
+  console.log(teamworkDetails.members, "INFO TEAM")
+  const handleDeleteMember = async(idUser) =>{
+   console.log(idUser, "ID USER")
+    try{
+      const filtMembers = teamworkDetails.members.filter((member) => member._id !== idUser)
+      await removeMemberService(id, idUser)
+      setTeamworkDetails(filtMembers)
 
-  if (!members) {
+    }catch(error){
+      navigate("/error");
+    }
+  }
+
+  if (!members || !teamworkDetails) {
     return <h3>...Loadding</h3>;
   }
 
-  // const showButton = () => {
-  //   return (
-  //     id && (
-  //       <button onClick={() => setEditMode(!editMode)}>
-  //         {editMode ? "Cancelar" : "Modificar"}
-  //       </button>
-  //     )
-  //   );
-  // };
+  const showButton = () => {
+    return (
+      id && (
+        <button onClick={() => setEditMode(!editMode)}>
+          {editMode ? "Cancelar" : "Modificar"}
+        </button>
+      )
+    );
+  };
 
   return (
     <div>
-      {/* {showButton()} */}
+      {showButton()}
+
       {editMode ? (
         <div>
           <label htmlFor='name'>Nombre Teamwork</label>
@@ -131,9 +147,9 @@ function NewTeamworks({ teamwork, deleteTeamwork }) {
             onChange={handleChangeSearch}
           />
 
-          {filteredMembers.map((eachmember) => {
+          {filteredMembers.map((eachmember, index) => {
             return (
-              <React.Fragment key={eachmember._id}>
+              <React.Fragment key={index}>
                 <li>{eachmember.name}</li>
 
                 <button
@@ -148,8 +164,15 @@ function NewTeamworks({ teamwork, deleteTeamwork }) {
 
           <br />
           <h3>{teamworkDetails.name}</h3>
-          {teamworkDetails.members.map((eachMember) => {
-            return <p>{eachMember.name}</p>;
+          {teamworkDetails.members?.map((eachMember) => {
+            return(
+              <React.Fragment key={eachMember._id}>
+              <p>{eachMember.name}</p>
+              <button onClick={() =>handleDeleteMember(eachMember._id)}>Eliminar</button>
+              <br />
+              </React.Fragment>
+            ) 
+              
           })}
           <br />
           {editMode && <button onClick={handleSubmit}> Guardar </button>}
@@ -158,16 +181,15 @@ function NewTeamworks({ teamwork, deleteTeamwork }) {
         <>
           <h3>Equipo : {teamworkDetails.name}</h3>
           <h3>Miembros</h3>
-          {teamworkDetails.members.map((eachMember) => {
+          {teamworkDetails.members?.map((eachMember) => {
+  
             return (
               <>
                 <p>{eachMember.name}</p>
               </>
             );
           })}
-          <div>
-            <button onClick={handleRemove}>Eliminar</button>
-          </div>
+          <div></div>
         </>
       )}
     </div>

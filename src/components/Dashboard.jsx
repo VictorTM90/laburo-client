@@ -26,6 +26,7 @@ function Dashboard() {
   const getAllTasks = async () => {
     try {
       const response = await getAllTasksService();
+      console.log(response);
       setAllTasks(response);
     } catch (err) {
       if (err.response.status === 401) {
@@ -109,6 +110,7 @@ function Dashboard() {
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay",
             }}
+            
             timeZone="UTC"
             slotMinTime='07:00:00'
             slotMaxTime='21:00:00'
