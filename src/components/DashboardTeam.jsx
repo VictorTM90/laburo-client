@@ -12,17 +12,19 @@ import {
 import DashboardDetail from "./DashboardDetail";
 
 function DashboardTeam() {
-  //1. crear el estado que maneja  la información
+
   const [allTasks, setAllTasks] = useState();
   const [selectedTask, setSelectedTask] = useState();
+  const [allTeamworks, setAllTeamworks] = useState();
+  const [selectedTeamwork, setSelectedTeamwork] = useState ()
   const navigate = useNavigate();
 
-  //2. el useEffect llama al componen que se está montando
+  
   useEffect(() => {
     getAllTasks();
   }, []);
 
-  //3. funcion que llama la info de la Api y actualiza el estado
+  //llamada a la Api y conseguir las tareas filtradas por el id del team
   const getAllTasks = async () => {
     try {
       const response = await getAllTasksService();

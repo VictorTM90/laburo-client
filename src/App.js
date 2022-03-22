@@ -14,7 +14,7 @@ import Task from "./pages/tasks/Task.jsx";
 import NewTask from "./pages/tasks/NewTask.jsx";
 
 import Teamwork from "./pages/teamwork/Teamwork";
-import NewTeamwork from "./pages/teamwork/NewTeamworks.jsx";
+import NewTeamworks from "./pages/teamwork/NewTeamworks.jsx";
 import TeamworkList from "./pages/teamwork/TeamworkList";
 
 //*COMPONENTES
@@ -55,8 +55,8 @@ function App() {
         <Route path='/task/new' element={<TaskDetail />} />
         <Route path='/task/:id' element={<Task />} />
 
-        <Route path='/teamwork/new' element={<NewTeamwork />} />
-        <Route path='/teamwork/:id' element={<NewTeamwork />} />
+        <Route path='/teamwork/new' element={<NewTeamworks />} />
+        <Route path='/teamwork/:id' element={<NewTeamworks />} />
         <Route path='/teamwork/:id/edit' element={<Teamwork />} />
 
         <Route path='/teamwork' element={<TeamworkList />} />

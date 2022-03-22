@@ -93,6 +93,9 @@ function Dashboard() {
       <Link to={"/teamwork/new"}>
         <button>Add Teamwork</button>
       </Link>
+      <Link to={"/teamwork/"}>
+        <button>Your Teamworks</button>
+      </Link>
       
       <div className='dashboardContainer'>
         <div className='fullCalendarContainer'>

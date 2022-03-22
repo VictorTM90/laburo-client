@@ -2,9 +2,7 @@ import React from 'react'
 import {NavLink} from "react-router-dom"
 
 
-function Navbar(props) {
-
-    console.log(props)
+function Navbar() {
 
   return (
     <div>
@@ -18,7 +16,7 @@ function Navbar(props) {
     <NavLink to="/profile"  > <button> Profile </button>    </NavLink>
 
     
-    <NavLink to="/" > <button> Log Out </button>    </NavLink>
+    <NavLink to="/" > <button> Home</button>    </NavLink>
     </div>
   )
 }

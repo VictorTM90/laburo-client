@@ -13,7 +13,7 @@ function Profile() {
     <div>
     
     <h1>Perfil del usuario</h1>
-     <DasboardTeam />
+     {/* <DasboardTeam /> */}
     <div className="calendar">
     <Dashboard /> 
     </div>

@@ -10,9 +10,6 @@ const getUsersDetailsService = (id) =>{
     return service.get(`${URL}/${id}`)
 }
 
-
-
-
 export{ 
     getAllUsersService,
     getUsersDetailsService,
