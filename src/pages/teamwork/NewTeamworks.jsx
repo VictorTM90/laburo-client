@@ -10,59 +10,68 @@ import {
 import { getAllUsersService } from "../../services/user.services.js";
 
 function NewTeamworks() {
-  
   const { id } = useParams();
-  const [teamworkDetails, setTeamworkDetails] = useState(
-      [] || {
-      name: "",
-      members: [],
+  const [teamworkDetails, setTeamworkDetails] = useState({
+    name: "",
+    members: [],
+  });
+  const [editMode, setEditMode] = useState(id ? false : true);
+  const [search, setSearch] = useState("");
+  const [members, setMembers] = useState([]);
+  const [filteredMembers, setFilteredMembers] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    //solo tenemos el teamworkDetail pero cuando tenemos id
+    if (id) {
+      teamworkDetail();
     }
-    );
-    const [editMode, setEditMode] = useState(id ? false : true);
-    const [search, setSearch] = useState("");
-    const [members, setMembers] = useState([]);
-    const [filteredMembers, setFilteredMembers] = useState([]);
-    const [addmembers, setAddmembers] = useState([]);
-    const navigate = useNavigate();
-    
-    
-    useEffect(() => {
-      teamworkDetail()
-      searchMembers();
-    }, []);
-    
-    // función para ejecutar en input
-    const handleChangeSearch = (e) => {
-      // actualiza el estado del search
-      setSearch(e.target.value);
-      
-      if (!e.target.value) {
-        setFilteredMembers([]);
-        return;
-      }
-      const filtMember = members.filter((eachmember) => {
-        return eachmember.name.includes(e.target.value) && eachmember.name;
-      });
-      // pasa el valor del input a la función
-      setFilteredMembers(filtMember);
-    };
-    
-    //buscar miembros en la base de datos
-    const searchMembers = async () => {
-      const response = await getAllUsersService();
-      
-      setMembers(response);
-    };
-   
+    searchMembers();
+  }, []);
+
+  // función para ejecutar en input
+  const handleChangeSearch = (e) => {
+    const inputText = e.target.value.toLowerCase()
+    // actualiza el estado del search
+    setSearch(inputText);
+
+    if (!inputText) {
+      setFilteredMembers([]);
+      return;
+    }
+    const id = localStorage.getItem("id"); //nos traemos del localstorage nuestro id
+
+    const filtMember = members?.filter((eachmember) => {
+      return (
+        eachmember.name.toLowerCase().includes(inputText) &&
+        eachmember.name &&
+        !teamworkDetails.members.some(
+          (member) => member?.name.toLowerCase().includes(inputText)
+        )
+        && eachmember._id !== id //no añadir el creador
+      );
+    });
+    // pasa el valor del input a la función
+    setFilteredMembers(filtMember);
+  };
+
+  //buscar miembros en la base de datos
+  const searchMembers = async () => {
+    const response = await getAllUsersService();
+
+    setMembers(response);
+  };
+
   //Añadir miembros al equipo
   const handleAddMember = (user) => {
-    setAddmembers([...addmembers, user]);
+    //copia del obeto y dentro de members clonamos los miembros que ya había y le añadimos el user
 
-    const teamWorkDetailsCopy = { ...teamworkDetails };
-
-    teamWorkDetailsCopy.members = [...addmembers, user];
-
-    setTeamworkDetails(teamWorkDetailsCopy);
+    setTeamworkDetails({
+      ...teamworkDetails,
+      members: [...teamworkDetails.members, user],
+    });
+    setFilteredMembers([]);
+    setSearch("");
   };
 
   // Cambiar los inputs
@@ -75,12 +84,11 @@ function NewTeamworks() {
   };
 
   //aqui llamamos a teamwork por el id
-  
-  const teamworkDetail = async () =>{
+
+  const teamworkDetail = async () => {
     try {
       const response = await getTeamworkDetailsService(id);
-      setTeamworkDetails(response)
-      
+      setTeamworkDetails(response);
     } catch (error) {
       navigate("/error");
     }
@@ -95,21 +103,24 @@ function NewTeamworks() {
       navigate(`/teamwork/${response._id}`);
     }
     setEditMode(!editMode);
+    setFilteredMembers([]);
+    setSearch("");
   };
 
   //Función para eliminar un miembro del equipo
-  console.log(teamworkDetails.members, "INFO TEAM")
-  const handleDeleteMember = async(idUser) =>{
-   console.log(idUser, "ID USER")
-    try{
-      const filtMembers = teamworkDetails.members.filter((member) => member._id !== idUser)
-      await removeMemberService(id, idUser)
-      setTeamworkDetails(filtMembers)
+  
+  const handleDeleteMember = async (idUser) => {
 
-    }catch(error){
+    try {
+      const filtMembers = teamworkDetails.members.filter(
+        (member) => member._id !== idUser
+      );
+      await removeMemberService(id, idUser);
+      setTeamworkDetails({...teamworkDetails, members : filtMembers});
+    } catch (error) {
       navigate("/error");
     }
-  }
+  };
 
   if (!members || !teamworkDetails) {
     return <h3>...Loadding</h3>;
@@ -135,7 +146,7 @@ function NewTeamworks() {
           <input
             type='text'
             name='name'
-            value={teamworkDetails.name}
+            value={teamworkDetails.name || ""}
             onChange={handleChange}
           />
           <label htmlFor='members'> Miembros</label>
@@ -165,14 +176,15 @@ function NewTeamworks() {
           <br />
           <h3>{teamworkDetails.name}</h3>
           {teamworkDetails.members?.map((eachMember) => {
-            return(
+            return (
               <React.Fragment key={eachMember._id}>
-              <p>{eachMember.name}</p>
-              <button onClick={() =>handleDeleteMember(eachMember._id)}>Eliminar</button>
-              <br />
+                <p>{eachMember.name}</p>
+                <button onClick={() => handleDeleteMember(eachMember._id)}>
+                  Eliminar
+                </button>
+                <br />
               </React.Fragment>
-            ) 
-              
+            );
           })}
           <br />
           {editMode && <button onClick={handleSubmit}> Guardar </button>}
@@ -182,12 +194,7 @@ function NewTeamworks() {
           <h3>Equipo : {teamworkDetails.name}</h3>
           <h3>Miembros</h3>
           {teamworkDetails.members?.map((eachMember) => {
-  
-            return (
-              <>
-                <p>{eachMember.name}</p>
-              </>
-            );
+            return <p key={eachMember._id}>{eachMember.name}</p>;
           })}
           <div></div>
         </>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/auth.services";
 import { Link } from "react-router-dom";
@@ -10,6 +10,13 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("authToken")
+    if (token){
+      navigate("/profile")
+    }
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,9 +25,10 @@ function Login() {
     try {
       // contactar con el server para logear al usuario
       const response = await loginService(user);
-      const { authToken } = response;
+      const { authToken, _id } = response;
 
       localStorage.setItem("authToken", authToken);
+      localStorage.setItem("id", _id)
 
       navigate("/profile");
     } catch (err) {

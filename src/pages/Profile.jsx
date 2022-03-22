@@ -1,7 +1,5 @@
 import React from 'react'
 import Dashboard from '../components/Dashboard'
-import DasboardTeam from '../components/DashboardTeam'
-
 
 
 function Profile() {

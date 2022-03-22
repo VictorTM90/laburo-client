@@ -23,7 +23,6 @@ function NewTask() {
     console.log(event)
     //elemento que está creando el usuario
     const newTask = {
-      // creator,
       start, 
       title,
       description,

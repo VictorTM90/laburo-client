@@ -10,11 +10,14 @@ import {
   updateTasksService,
 } from "../services/tasks.services";
 import DashboardDetail from "./DashboardDetail";
+import Modal from "./Modal";
+import { CircularProgress } from "@mui/material";
 
 function Dashboard() {
   //1. crear el estado que maneja  la información
   const [allTasks, setAllTasks] = useState();
   const [selectedTask, setSelectedTask] = useState();
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   //2. el useEffect llama al componen que se está montando
@@ -39,7 +42,7 @@ function Dashboard() {
 
   //4. sistema de loading
   if (!allTasks) {
-    return <h3>...Loading</h3>;
+    return <CircularProgress />
   }
 
   const handleDayChange = async (e) => {
@@ -66,7 +69,6 @@ function Dashboard() {
       setSelectedTask(editedTaskCopy);
       // console.log(editedTaskCopy);
     }
-
   };
 
   const handleShowTask = (e) => {
@@ -76,12 +78,18 @@ function Dashboard() {
     const taskClicked = allTasks.find((eachTask) => eachTask._id === _id);
     //guardar en el estado la task clicada
     setSelectedTask(taskClicked);
+    setOpen(true)
   };
 
   const handleDeleteTask = (id) => {
     const filteredTasks = allTasks.filter((task) => task._id !== id);
     setAllTasks(filteredTasks);
     setSelectedTask();
+    handleCloseModal()
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
   };
 
   return (
@@ -97,7 +105,7 @@ function Dashboard() {
       <Link to={"/teamwork/"}>
         <button>Your Teamworks</button>
       </Link>
-      
+
       <div className='dashboardContainer'>
         <div className='fullCalendarContainer'>
           <FullCalendar
@@ -110,8 +118,7 @@ function Dashboard() {
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay",
             }}
-            
-            timeZone="UTC"
+            timeZone='UTC'
             slotMinTime='07:00:00'
             slotMaxTime='21:00:00'
             height={700}
@@ -120,13 +127,16 @@ function Dashboard() {
             events={allTasks}
             eventChange={handleDayChange}
             eventClick={handleShowTask}
-            eventColor="orange"
+            eventColor='orange'
             // eventBorderColor="red"
           />
         </div>
-        {selectedTask && (
+        {/* {selectedTask && (
           <DashboardDetail task={selectedTask} deleteTask={handleDeleteTask} />
-        )}
+        )} */}
+        <Modal open={open} handleClose={handleCloseModal}>
+          <DashboardDetail task={selectedTask} deleteTask={handleDeleteTask} />
+        </Modal>
       </div>
     </div>
   );

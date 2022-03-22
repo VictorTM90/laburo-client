@@ -11,17 +11,16 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Task from "./pages/tasks/Task.jsx";
-import NewTask from "./pages/tasks/NewTask.jsx";
+
 
 
 import NewTeamworks from "./pages/teamwork/NewTeamworks.jsx";
 import TeamworkList from "./pages/teamwork/TeamworkList";
 
 //*COMPONENTES
-import Navbar from "./components/Navbar";
-import Dashboard from "./components/Dashboard";
-import DashboardTeam from "./components/DashboardTeam";
+import NavbarMUI from "./components/NavbarMUI";
 import TaskDetail from "./components/TaskDetail/TaskDetail";
+import Logout from "./pages/Logout";
 
 function App() {
   const navigate = useNavigate();
@@ -34,21 +33,17 @@ function App() {
     //conexion servidor y validar
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/login");
-  };
+ 
 
   return (
     <div className='App'>
-      <button onClick={handleLogout}>Log out</button>
-      {/* <Navbar isLoggedIn ={isLoggedIn}/> */}
-      <Navbar />
+      
+      <NavbarMUI />
       <Routes>
-        <Route path='/' element={<Home />} />
 
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/logout' element={<Logout />} />
 
         <Route path='/profile' element={<Profile />} />
 
@@ -61,9 +56,8 @@ function App() {
 
         <Route path='/teamwork' element={<TeamworkList />} />
 
-        <Route path='/teamwork/task' element={<DashboardTeam />} />
-
         <Route path='/error' element={<Error />} />
+        <Route path='*' element={<Login />} />
       </Routes>
     </div>
   );

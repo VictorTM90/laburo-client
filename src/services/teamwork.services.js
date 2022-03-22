@@ -37,6 +37,8 @@ const addNewTeamworkService = (newTeamwork) =>{
       return service.patch (`${URL}/${id}/quit`)
   }
 
+  
+
   export{
       getAllTeamworkService,
       addNewTeamworkService,
