@@ -8,6 +8,8 @@ const URL = '/teamwork'
     return service.get(`${URL}/`)
 } 
 
+
+
 const addNewTeamworkService = (newTeamwork) =>{
 
       // pasamos como parámetro lo que recogemos en el form 

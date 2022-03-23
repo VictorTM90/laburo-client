@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Dashboard from "../../components/Dashboard.jsx";
 import {
   addNewTeamworkService,
   updateTeamworkService,
@@ -196,7 +197,9 @@ function NewTeamworks() {
           {teamworkDetails.members?.map((eachMember) => {
             return <p key={eachMember._id}>{eachMember.name}</p>;
           })}
-          <div></div>
+          <div>
+            <Dashboard />
+          </div>
         </>
       )}
     </div>

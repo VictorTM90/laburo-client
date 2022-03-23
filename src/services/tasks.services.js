@@ -6,6 +6,11 @@ const getAllTasksService = () => {
   return service.get(`${URL}/`);
 };
 
+const getAllTeamworkTasksService = (id) =>{
+  return service.get(`${URL}/teamwork/${id}`)
+} 
+
+
 const addNewTasksService = (newTask) => {
   // pasamos como parámetro lo que recogemos en el form
   // console.log(newTask, "hola");
@@ -31,4 +36,5 @@ export {
   getTasksDetailsService,
   deleteTasksService,
   updateTasksService,
+  getAllTeamworkTasksService
 };

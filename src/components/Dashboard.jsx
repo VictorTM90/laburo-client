@@ -3,12 +3,14 @@ import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   getAllTasksService,
+  getAllTeamworkTasksService,
   updateTasksService,
 } from "../services/tasks.services";
+
 import DashboardDetail from "./DashboardDetail";
 import Modal from "./Modal";
 import { CircularProgress } from "@mui/material";
@@ -18,6 +20,7 @@ function Dashboard() {
   const [allTasks, setAllTasks] = useState();
   const [selectedTask, setSelectedTask] = useState();
   const [open, setOpen] = useState(false);
+  const {id} = useParams(); 
   const navigate = useNavigate();
 
   //2. el useEffect llama al componen que se está montando
@@ -28,9 +31,21 @@ function Dashboard() {
   //3. funcion que llama la info de la Api y actualiza el estado
   const getAllTasks = async () => {
     try {
-      const response = await getAllTasksService();
-      console.log(response);
+      // si no id del teamwork
+      
+     if(!id){
+        const response = await getAllTasksService();
       setAllTasks(response);
+      } else {
+       // si tengo id del teamwork 
+        const responseTask = await getAllTeamworkTasksService(id)
+        
+        setAllTasks(responseTask);
+        //hacer la llamda de las tareas del teamwork 
+      }
+
+
+
     } catch (err) {
       if (err.response.status === 401) {
         navigate("/login");
@@ -67,7 +82,7 @@ function Dashboard() {
 
     if (_id === selectedTask?._id) {
       setSelectedTask(editedTaskCopy);
-      // console.log(editedTaskCopy);
+     
     }
   };
 
@@ -129,6 +144,8 @@ function Dashboard() {
             eventClick={handleShowTask}
             eventColor='orange'
             // eventBorderColor="red"
+            all-day= "false"
+           
           />
         </div>
         {/* {selectedTask && (
