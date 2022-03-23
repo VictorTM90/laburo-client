@@ -20,6 +20,11 @@ const addNewTeamworkService = (newTeamwork) =>{
       return service.get(`${URL}/${id}`)
   }
 
+  const getTeamworkByIdCreator = () =>{
+    return service.get(`${URL}/creatorteams`)
+}
+
+
   const deleteTeamworkService = (id) =>{
       return service.delete(`${URL}/${id}`)
   }; 
@@ -48,6 +53,7 @@ const addNewTeamworkService = (newTeamwork) =>{
       deleteTeamworkService,
       updateTeamworkService,
       removeMemberService, 
-      quitMemberService
+      quitMemberService,
+      getTeamworkByIdCreator
       
   }
