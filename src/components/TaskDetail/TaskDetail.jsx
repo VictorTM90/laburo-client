@@ -12,15 +12,14 @@ import styles from "./TaskDetail.module.css";
 function TaskDetail({ task }) {
   const [taskDetails, setTaskDetails] = useState(
     task || {
-      creator: "",
+      creator: localStorage.getItem("id"),
       title: "",
       start: new Date(),
       end: new Date(),
       description: "",
       isUrgent: false,
-      //taskType,
-       teamwork: "",
-       assigned: "",
+      teamwork: localStorage.getItem("id"),
+      assigned: localStorage.getItem("id"),
       isDone: "",
     }
   );
@@ -42,10 +41,16 @@ function TaskDetail({ task }) {
       setTaskDetails(task);
     }
 
-    //  getAllTeamworks()
-    // searhbyCreator()
     getTeamworksByCreator();
   }, [task]); //en dependencias pasamos la task para que cada vez que cambiamos la props se actualiza en taskDetails
+
+  useEffect(() => {
+    if (creatorTeam && task?.teamwork) {
+      const teamworkMembers = getTeamworkMembers(task.teamwork._id);
+
+      setMembersInTeamwork(teamworkMembers);
+    }
+  }, [creatorTeam]);
 
   // 1.llamar al server para todos los miembros del team en el que el usuario es creador
   const getTeamworksByCreator = async () => {
@@ -58,39 +63,49 @@ function TaskDetail({ task }) {
     }
   };
 
-  // Map MAP
-  //  const searchMembers = creatorTeam.map((eachTeam) =>{
-  //     eachTeam.members.name => guardar en un estado
-
-  //  actualizar el estado del SetTaskDetails [...TaskDetails, assigned: [...TaskDetails.assigned,   ]]
-
-  //  })
+  const getTeamworkMembers = (text) => {
+    return creatorTeam.find((eachTeamwork) => {
+      // eslint-disable-next-line eqeqeq
+      return eachTeamwork._id == text;
+    })?.members;
+  };
 
   const handleChangeTeamwork = (e) => {
-    setTaskDetails({ ...taskDetails, [e.target.name]: e.target.value });
+    const handleObject = { ...taskDetails, [e.target.name]: e.target.value };
 
-    const teamworkMatch = creatorTeam.find((eachTeamwork) => {
-      console.log(eachTeamwork._id, e.target.value)
-      return eachTeamwork._id == e.target.value
-    })
-    console.log(teamworkMatch)
-    setMembersInTeamwork(teamworkMatch.members);
+    setMembersInTeamwork(getTeamworkMembers(e.target.value));
+
+    if (!handleObject.assigned?._id) {
+      handleObject.assigned = taskDetails.creator._id;
+    }
+
+    if (e.target.value === "-----------") {
+      handleObject.teamwork = taskDetails.creator._id;
+    }
+    setTaskDetails(handleObject);
   };
 
   const handleChange = (e) => {
-    console.log(creatorTeam)
+    if (e.target.name === "assigned" && e.target.value === "-----------") {
+      e.target.value = localStorage.getItem("id");
+    }
     //para acceder a un campo de un objeto dimámico siempre utilizar []
     setTaskDetails({ ...taskDetails, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const copyTaskDetails = { ...taskDetails };
+
+    if (!copyTaskDetails.assigned) {
+      copyTaskDetails.assigned = localStorage.getItem("id");
+    }
     if (id) {
-      await updateTasksService(id, taskDetails);
+      const response = await updateTasksService(id, copyTaskDetails);
+      setTaskDetails(response);
       setEditMode(!editMode);
     } else {
-      console.log(taskDetails)
-      const response = await addNewTasksService(taskDetails);
+      const response = await addNewTasksService(copyTaskDetails);
       navigate(`/task/${response._id}`);
     }
   };
@@ -131,98 +146,99 @@ function TaskDetail({ task }) {
 
       {editMode ? (
         <form onSubmit={handleSubmit} className={styles.form}>
-          <label htmlFor="title">Título:</label>
+          <label htmlFor='title'>Título:</label>
           <input
-            type="text"
-            name="title"
+            type='text'
+            name='title'
             value={taskDetails.title}
             onChange={handleChange}
           />
-          <label htmlFor="description">Descripcion:</label>
+          <label htmlFor='description'>Descripcion:</label>
           <input
-            type="text"
-            name="description"
+            type='text'
+            name='description'
             value={taskDetails.description}
             onChange={handleChange}
           />
 
-          <label htmlFor="start">Fecha inicio:</label>
+          <label htmlFor='start'>Fecha inicio:</label>
 
           <input
-            type="datetime-local"
-            name="start"
+            type='datetime-local'
+            name='start'
             value={formatedDateInput(taskDetails.start)}
             onChange={handleChange}
           />
 
-          <label htmlFor="end">Fecha límite:</label>
+          <label htmlFor='end'>Fecha límite:</label>
 
           <input
-            type="datetime-local"
-            name="end"
+            type='datetime-local'
+            name='end'
             value={formatedDateInput(taskDetails.end)}
             onChange={handleChange}
           />
 
-          <label htmlFor="teamwork">Equipo:</label>
-            <select name="teamwork" onChange={handleChangeTeamwork}>
-             {!membersInTeamwork && <option> your teamwork </option>}
-              
-              {creatorTeam.map((eachTeam) => {
+          <label htmlFor='teamwork'>Equipo:</label>
+          <select name='teamwork' onChange={handleChangeTeamwork}>
+            <option value={null}>-----------</option>
+
+            {creatorTeam.map((eachTeam) => {
+              return (
+                <option
+                  selected={taskDetails.teamwork?._id === eachTeam._id}
+                  key={eachTeam._id}
+                  value={eachTeam._id}>
+                  {eachTeam.name}
+                </option>
+              );
+            })}
+          </select>
+
+          <label htmlFor='teamwork'> Asignado a : </label>
+
+          <select
+            name='assigned'
+            onChange={handleChange}
+            disabled={membersInTeamwork ? false : true}>
+            <option value={null}>-----------</option>
+            {membersInTeamwork &&
+              membersInTeamwork.map((eachMember) => {
                 return (
-                  <option key={eachTeam._id} value={eachTeam._id}>
-                    {eachTeam.name}
+                  <option
+                    selected={taskDetails.assigned?._id === eachMember._id}
+                    key={eachMember._id}
+                    value={eachMember._id}>
+                    {eachMember.name}
                   </option>
                 );
               })}
-            </select>
-        
-          
+          </select>
 
-          <label htmlFor="teamwork">  Asignado a :  </label>
-           
-            <select name="assigned" onChange={handleChange} disabled={membersInTeamwork ? false : true} >
-
-            {membersInTeamwork && membersInTeamwork.map((eachMember) => {
-                      return (
-                        <option key={eachMember._id} value={eachMember._id}>
-                          {eachMember.name}
-                        </option>
-                      );
-                    })}
-
-
-
-            </select>
-       
-
-          {/* <label htmlFor='assigned'>Tipo de tarea:
-          <select name="assigned" onChange={handleChange}>
-              <option value='Personal'>Personal</option>
-              <option value='Teamwork'>Teamwork</option>
-            </select>
-          </label> */}
-
-          <label htmlFor="isDone">
+          <label htmlFor='isDone'>
             Estado:
-            <select name="isDone" onChange={handleChange}>
-              <option value="To do">To Do</option>
-              <option value="Doing">Doing</option>
-              <option value="Done">Done!</option>
+            <select name='isDone' onChange={handleChange}>
+              <option value='To do'>To Do</option>
+              <option value='Doing'>Doing</option>
+              <option value='Done'>Done!</option>
             </select>
           </label>
 
-          {editMode && <button type="submit"> Guardar</button>}
+          {editMode && <button type='submit'> Guardar</button>}
         </form>
       ) : (
         <>
           <h3>{taskDetails.title}</h3>
-          <p>{formatedDateView(taskDetails.start)}</p>
-          <p>{formatedDateView(taskDetails.end)}</p>
-          <p>{taskDetails.description}</p>
+          {taskDetails.creator && <p>Creador: {taskDetails.creator.name}</p>}
+          <p>Empieza: {formatedDateView(taskDetails.start)}</p>
+          <p>Acaba: {formatedDateView(taskDetails.end)}</p>
+          <p>Descripción: {taskDetails.description}</p>
+          {taskDetails.assigned?.name && (
+            <p>Asignada: {taskDetails.assigned.name}</p>
+          )}
           <p>{taskDetails.isDone}</p>
 
-          <p>{taskDetails.teamwork}</p>
+          {taskDetails.teamwork && <p>Team: {taskDetails.teamwork.name}</p>}
         </>
       )}
     </div>
