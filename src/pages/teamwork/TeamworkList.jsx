@@ -2,6 +2,7 @@ import React from "react";
 import { deleteTeamworkService, getAllTeamworkService } from "../../services/teamwork.services";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 function TeamworkList() {
   const [allTeamwork, setAllTeamwork] = useState([]);
@@ -27,7 +28,7 @@ function TeamworkList() {
    };
 
   if (!allTeamwork) {
-    return <h3>...Loading</h3>;
+    return <h3><CircularProgress />;</h3>;
   }
 
   return (
