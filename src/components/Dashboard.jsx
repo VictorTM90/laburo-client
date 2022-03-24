@@ -14,6 +14,8 @@ import {
 import DashboardDetail from "./DashboardDetail";
 import Modal from "./Modal";
 import { CircularProgress } from "@mui/material";
+import Button from '@mui/material/Button';
+import styles from "./Dashboard.module.css"
 
 function Dashboard() {
   //1. crear el estado que maneja  la información
@@ -109,17 +111,17 @@ function Dashboard() {
 
   return (
     <div>
-      <h2>El Dashboard</h2>
-
+     <div className={styles}>
       <Link to={"/task/new"}>
-        <button>Add Task</button>
+        <Button variant="outlined" color="success">Add Task</Button>
       </Link>
       <Link to={"/teamwork/new"}>
-        <button>Add Teamwork</button>
+        <Button variant="outlined" color="success">Add Teamwork</Button>
       </Link>
       <Link to={"/teamwork/"}>
-        <button>Your Teamworks</button>
+        <Button variant="outlined" color="secondary">Your Teamworks</Button>
       </Link>
+     </div>
 
       <div className='dashboardContainer'>
         <div className='fullCalendarContainer'>
@@ -148,9 +150,6 @@ function Dashboard() {
            
           />
         </div>
-        {/* {selectedTask && (
-          <DashboardDetail task={selectedTask} deleteTask={handleDeleteTask} />
-        )} */}
         <Modal open={open} handleClose={handleCloseModal}>
           <DashboardDetail task={selectedTask} deleteTask={handleDeleteTask} />
         </Modal>

@@ -5,13 +5,10 @@ import Dashboard from '../components/Dashboard'
 function Profile() {
 
   
-
-
   return (
     <div>
     
-    <h1>Perfil del usuario</h1>
-     {/* <DasboardTeam /> */}
+    <h1>Dashboard personal</h1>
     <div className="calendar">
     <Dashboard /> 
     </div>

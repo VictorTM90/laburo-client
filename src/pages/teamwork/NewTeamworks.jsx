@@ -10,6 +10,13 @@ import {
 } from "../../services/teamwork.services.js";
 import { getAllUsersService } from "../../services/user.services.js";
 
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+
 function NewTeamworks() {
   const { id } = useParams();
   const [teamworkDetails, setTeamworkDetails] = useState({
@@ -32,7 +39,7 @@ function NewTeamworks() {
 
   // función para ejecutar en input
   const handleChangeSearch = (e) => {
-    const inputText = e.target.value.toLowerCase()
+    const inputText = e.target.value.toLowerCase();
     // actualiza el estado del search
     setSearch(inputText);
 
@@ -46,10 +53,10 @@ function NewTeamworks() {
       return (
         eachmember.name.toLowerCase().includes(inputText) &&
         eachmember.name &&
-        !teamworkDetails.members.some(
-          (member) => member?.name.toLowerCase().includes(inputText)
-        )
-        && eachmember._id !== id //no añadir el creador
+        !teamworkDetails.members.some((member) =>
+          member?.name.toLowerCase().includes(inputText)
+        ) &&
+        eachmember._id !== id //no añadir el creador
       );
     });
     // pasa el valor del input a la función
@@ -109,15 +116,14 @@ function NewTeamworks() {
   };
 
   //Función para eliminar un miembro del equipo
-  
-  const handleDeleteMember = async (idUser) => {
 
+  const handleDeleteMember = async (idUser) => {
     try {
       const filtMembers = teamworkDetails.members.filter(
         (member) => member._id !== idUser
       );
       await removeMemberService(id, idUser);
-      setTeamworkDetails({...teamworkDetails, members : filtMembers});
+      setTeamworkDetails({ ...teamworkDetails, members: filtMembers });
     } catch (error) {
       navigate("/error");
     }
@@ -130,19 +136,25 @@ function NewTeamworks() {
   const showButton = () => {
     return (
       id && (
-        <button onClick={() => setEditMode(!editMode)}>
-          {editMode ? "Cancelar" : "Modificar"}
-        </button>
+        <CardActions>
+          <Button size='small' onClick={() => setEditMode(!editMode)}>
+            {editMode ? "Cancelar" : "Modificar"}
+          </Button>
+        </CardActions>
       )
     );
   };
 
+
   return (
     <div>
-      {showButton()}
-
       {editMode ? (
         <div>
+
+        <div className="input-container">
+
+        <div className="input">
+
           <label htmlFor='name'>Nombre Teamwork</label>
           <input
             type='text'
@@ -150,6 +162,10 @@ function NewTeamworks() {
             value={teamworkDetails.name || ""}
             onChange={handleChange}
           />
+        </div>
+
+        <div className="input">
+
           <label htmlFor='members'> Miembros</label>
           <input
             placeholder='search member'
@@ -158,18 +174,20 @@ function NewTeamworks() {
             value={search}
             onChange={handleChangeSearch}
           />
+        </div>
+        </div>
 
           {filteredMembers.map((eachmember, index) => {
             return (
               <React.Fragment key={index}>
                 <li>{eachmember.name}</li>
 
-                <button
+                <Button variant="contained" color="success"
                   onClick={() => {
                     handleAddMember(eachmember);
                   }}>
                   Añadir miembro
-                </button>
+                </Button>
               </React.Fragment>
             );
           })}
@@ -180,23 +198,34 @@ function NewTeamworks() {
             return (
               <React.Fragment key={eachMember._id}>
                 <p>{eachMember.name}</p>
-                <button onClick={() => handleDeleteMember(eachMember._id)}>
+                <Button size="small" onClick={() => handleDeleteMember(eachMember._id)}>
                   Eliminar
-                </button>
+                </Button>
                 <br />
               </React.Fragment>
             );
           })}
           <br />
-          {editMode && <button onClick={handleSubmit}> Guardar </button>}
+          {editMode && <Button variant="contained" color="success" onClick={handleSubmit}> Guardar </Button>}
         </div>
       ) : (
         <>
-          <h3>Equipo : {teamworkDetails.name}</h3>
-          <h3>Miembros</h3>
-          {teamworkDetails.members?.map((eachMember) => {
-            return <p key={eachMember._id}>{eachMember.name}</p>;
-          })}
+          <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography variant='h5' component='div'>
+                Equipo : {teamworkDetails.name}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+                Miembros
+              </Typography>
+              {teamworkDetails.members?.map((eachMember) => {
+                return <p key={eachMember._id}>{eachMember.name}</p>;
+              })}
+            </CardContent>
+
+            <CardActions>{showButton()}</CardActions>
+          </Card>
+
           <div>
             <Dashboard />
           </div>

@@ -26,3 +26,34 @@
 .listaTareasContainer{
   margin-left: 50px;
 }
+
+/* NEWTEAMWORKS */
+
+.input-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container label{
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.input{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.input label{
+  display: flex;
+  align-self: center;
+}
+
+.input-container input{
+  margin: 10px;
+  height:20px;
+  border-radius: 5%;
+}
