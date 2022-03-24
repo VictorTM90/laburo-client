@@ -15,6 +15,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { CircularProgress } from "@mui/material";
 
 
 function NewTeamworks() {
@@ -130,7 +131,7 @@ function NewTeamworks() {
   };
 
   if (!members || !teamworkDetails) {
-    return <h3>...Loadding</h3>;
+    return <h3><CircularProgress /></h3>;
   }
 
   const showButton = () => {
@@ -147,7 +148,7 @@ function NewTeamworks() {
 
 
   return (
-    <div>
+    <div className="newteamworks-container">
       {editMode ? (
         <div>
 
@@ -209,8 +210,8 @@ function NewTeamworks() {
           {editMode && <Button variant="contained" color="success" onClick={handleSubmit}> Guardar </Button>}
         </div>
       ) : (
-        <>
-          <Card sx={{ minWidth: 275 }}>
+        <div className="team-card">
+          <Card sx={{ minWidth: 275}}>
             <CardContent>
               <Typography variant='h5' component='div'>
                 Equipo : {teamworkDetails.name}
@@ -226,10 +227,10 @@ function NewTeamworks() {
             <CardActions>{showButton()}</CardActions>
           </Card>
 
-          <div>
+          <div className="dashboardteam-container">
             <Dashboard />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

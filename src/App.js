@@ -38,7 +38,7 @@ function App() {
   return (
     <div className='App'>
 
-      {token && <NavbarMUI />}
+      <NavbarMUI />
       
       <Routes>
 
