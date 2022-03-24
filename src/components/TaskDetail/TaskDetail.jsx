@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
@@ -138,93 +138,114 @@ function TaskDetail({ task }) {
 
   return (
     <div>
-      {id && (
-        <button onClick={() => setEditMode(!editMode)}>
-          {editMode ? "Cancelar" : "Modificar"}
-        </button>
-      )}
+      
+   
 
       {editMode ? (
         <form onSubmit={handleSubmit} className={styles.form}>
-          <label htmlFor='title'>Título:</label>
-          <input
-            type='text'
-            name='title'
-            value={taskDetails.title}
-            onChange={handleChange}
-          />
-          <label htmlFor='description'>Descripcion:</label>
-          <input
-            type='text'
-            name='description'
-            value={taskDetails.description}
-            onChange={handleChange}
-          />
+          <div>
+            <label htmlFor='title'>Título:</label>
+            <input
+              type='text'
+              name='title'
+              value={taskDetails.title}
+              onChange={handleChange}
+            />
+          </div>
 
-          <label htmlFor='start'>Fecha inicio:</label>
+          <div>
+            <label htmlFor='description'>Descripcion:</label>
+            <input
+              type='text'
+              name='description'
+              value={taskDetails.description}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type='datetime-local'
-            name='start'
-            value={formatedDateInput(taskDetails.start)}
-            onChange={handleChange}
-          />
+          <div>
+            <label htmlFor='start'>Fecha inicio:</label>
 
-          <label htmlFor='end'>Fecha límite:</label>
+            <input
+              type='datetime-local'
+              name='start'
+              value={formatedDateInput(taskDetails.start)}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type='datetime-local'
-            name='end'
-            value={formatedDateInput(taskDetails.end)}
-            onChange={handleChange}
-          />
+          <div>
+            <label htmlFor='end'>Fecha límite:</label>
 
-          <label htmlFor='teamwork'>Equipo:</label>
-          <select name='teamwork' onChange={handleChangeTeamwork}>
-            <option value={null}>-----------</option>
+            <input
+              type='datetime-local'
+              name='end'
+              value={formatedDateInput(taskDetails.end)}
+              onChange={handleChange}
+            />
+          </div>
 
-            {creatorTeam.map((eachTeam) => {
-              return (
-                <option
-                  selected={taskDetails.teamwork?._id === eachTeam._id}
-                  key={eachTeam._id}
-                  value={eachTeam._id}>
-                  {eachTeam.name}
-                </option>
-              );
-            })}
-          </select>
+          <div>
+            <label htmlFor='teamwork'>Equipo:</label>
+            <select name='teamwork' onChange={handleChangeTeamwork}>
+              <option value={null}>-----------</option>
 
-          <label htmlFor='teamwork'> Asignado a : </label>
-
-          <select
-            name='assigned'
-            onChange={handleChange}
-            disabled={membersInTeamwork ? false : true}>
-            <option value={null}>-----------</option>
-            {membersInTeamwork &&
-              membersInTeamwork.map((eachMember) => {
+              {creatorTeam.map((eachTeam) => {
                 return (
                   <option
-                    selected={taskDetails.assigned?._id === eachMember._id}
-                    key={eachMember._id}
-                    value={eachMember._id}>
-                    {eachMember.name}
+                    selected={taskDetails.teamwork?._id === eachTeam._id}
+                    key={eachTeam._id}
+                    value={eachTeam._id}>
+                    {eachTeam.name}
                   </option>
                 );
               })}
-          </select>
+            </select>
+          </div>
 
-          <label htmlFor='isDone'>
-            Estado:
+          <div>
+            <label htmlFor='teamwork'> Asignado a : </label>
+
+            <select
+              name='assigned'
+              onChange={handleChange}
+              disabled={membersInTeamwork ? false : true}>
+              <option value={null}>-----------</option>
+              {membersInTeamwork &&
+                membersInTeamwork.map((eachMember) => {
+                  return (
+                    <option
+                      selected={taskDetails.assigned?._id === eachMember._id}
+                      key={eachMember._id}
+                      value={eachMember._id}>
+                      {eachMember.name}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor='isDone'>Estado:</label>
             <select name='isDone' onChange={handleChange}>
               <option value='To do'>To Do</option>
               <option value='Doing'>Doing</option>
               <option value='Done'>Done!</option>
             </select>
-          </label>
+          </div>
 
-          {editMode && <button type='submit'> Guardar</button>}
+          <div>
+            {editMode && (
+              <Button
+                variant='contained'
+                color='success'
+                size='small'
+                type='submit'>
+                {" "}
+                Guardar
+              </Button>
+            )}
+          </div>
         </form>
       ) : (
         <>
@@ -239,6 +260,12 @@ function TaskDetail({ task }) {
           <p>{taskDetails.isDone}</p>
 
           {taskDetails.teamwork && <p>Team: {taskDetails.teamwork.name}</p>}
+
+          {id && (
+        <Button variant="outlined" color="secondary" onClick={() => setEditMode(!editMode)}>
+          {editMode ? "Cancelar" : "Modificar"}
+        </Button>
+      )}
         </>
       )}
     </div>

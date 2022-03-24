@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,12 +14,11 @@ function DashboardDetail({ task, deleteTask }) {
 
   return task ? (
     <div className='listaTareasContainer'>
-      <h2>Tarea</h2>
       <Link to={`/task/${task._id}`} className='task-link'>
         <TaskDetail task={task}/>
       </Link>
       <div>
-        <button onClick={handleRemove}>Eliminar</button>
+        <Button variant="outlined" color="error" onClick={handleRemove}>Eliminar</Button>
       </div>
     </div>
   ) : null;

@@ -1,6 +1,30 @@
 .form{
+    margin: 50px;
     display:flex;
-    max-width: 500px;
     justify-content: center;
     flex-direction: column;
+}
+
+.form label{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.form input{
+    width:300px;
+    height: 20px;
+}
+
+.form select{
+    width:300px;
+    height: 20px;
+}
+
+.form div{
+    margin: 20px;
+}
+
+.form button{
+    width: 100px;
 }
