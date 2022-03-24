@@ -22,10 +22,11 @@ import TaskDetail from "./components/TaskDetail/TaskDetail";
 import Logout from "./pages/Logout";
 
 function App() {
-  const navigate = useNavigate();
+  //
+  const token = ""  
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
     //propiedades del localStorage getItem// setItem y removeItem
+    const  token = localStorage.getItem("authToken");
     if (token) {
       verifyService();
     }
@@ -36,8 +37,9 @@ function App() {
 
   return (
     <div className='App'>
+
+      {token && <NavbarMUI />}
       
-      <NavbarMUI />
       <Routes>
 
         <Route path='/login' element={<Login />} />

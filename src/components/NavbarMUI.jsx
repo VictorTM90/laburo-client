@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import React ,{ useState, useContext} from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 
+import { ThemeProvider } from '@mui/material/styles'
+import { ThemeContext } from "../context/theme.context"
 
 
 
@@ -26,9 +28,12 @@ const settings = [
 ];
 
 const ResponsiveAppBar = () => {
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
+
+  const { theme } = useContext (ThemeContext)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,6 +51,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -146,6 +152,7 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </ThemeProvider>
   );
 };
 export default ResponsiveAppBar;
