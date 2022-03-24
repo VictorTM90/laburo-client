@@ -3,6 +3,27 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/auth.services";
 import { Link } from "react-router-dom";
+import styles from "./LoginSignup.module.css"
+import Button from '@mui/material/Button';
+import { createTheme } from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles'
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e',
+  },
+  palette: {
+    primary: {
+      main: '#0971f1',
+      darker: '#053e85',
+    },
+    neutral: {
+      // main: '#64748B',
+      main: "#EB984E",
+      contrastText: '#fff',
+    },
+  },
+});
 
 function Login() {
   const [password, setPassword] = useState("");
@@ -39,10 +60,13 @@ function Login() {
   };
 
   return (
-    <div>
-      <Link to='/'>Home</Link>
-      <Link to='/signup'>Signup </Link>
+    <div className={styles.form}>
+     <div className="login-container">
+
+      <h2>LABURO</h2>
       <form onSubmit={handleSubmit}>
+      <div >
+
         <label htmlFor='email'>Email:</label>
         <input
           type='text'
@@ -51,6 +75,10 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
+      </div>
+
+      <div >
+
         <label htmlFor='password'>Password:</label>
         <input
           type='text'
@@ -59,11 +87,18 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <button>Submit</button>
+      </div>
+      <ThemeProvider theme={theme}>
+        <Button type='submit' size="small" color="neutral" variant="contained">Submit</Button>
+      </ThemeProvider>
       </form>
 
       <p>{errorMessage}</p>
+
+      <p>¿Es tu primera vez en LABURO?</p>
+      <Link to='/signup'>Signup</Link>
     </div>
+     </div>
   );
 }
 

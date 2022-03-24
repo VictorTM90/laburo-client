@@ -2,8 +2,28 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../services/auth.services";
-
+import styles from "./LoginSignup.module.css"
+import Button from '@mui/material/Button';
+import { createTheme } from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles'
 import { Link } from "react-router-dom";
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e',
+  },
+  palette: {
+    primary: {
+      main: '#0971f1',
+      darker: '#053e85',
+    },
+    neutral: {
+      main: "#EB984E",
+      contrastText: '#fff',
+    },
+  },
+});
+
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,12 +48,12 @@ function Signup() {
     }
   };
   return (
-    <div>
-      <Link to='/'>Home</Link>
-      <Link to='/login'>Login</Link>
-      <h3>SignUp</h3>
+    <div className={styles.form}>
+      
+      <h3>LABURO</h3>
 
       <form onSubmit={handleSubmit}>
+<div>
         <label htmlFor='name'>Name:</label>
         <input
           type='text'
@@ -42,6 +62,10 @@ function Signup() {
           onChange={(e) => setName(e.target.value)}
         />
         <br />
+</div>
+
+<div>
+
         <label htmlFor='email'>Email:</label>
         <input
           type='text'
@@ -50,6 +74,10 @@ function Signup() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
+</div>
+
+<div>
+
         <label htmlFor='password'>Password:</label>
         <input
           type='text'
@@ -58,10 +86,15 @@ function Signup() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <button>Submit</button>
+</div>
+        <ThemeProvider theme={theme}>
+        <Button type='submit' size="small" color="neutral" variant="contained">Submit</Button>
+      </ThemeProvider>
       </form>
 
       <p>{errorMessage}</p>
+      <p>Si ya tienes una cuenta en LABURO <br />ve a <Link to='/login'>Login</Link></p>
+      
     </div>
   );
 }
