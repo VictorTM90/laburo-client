@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TaskDetail from "../../components/TaskDetail/TaskDetail";
 import { getTasksDetailsService } from "../../services/tasks.services";
-
+import { CircularProgress } from "@mui/material"
 function Task() {
   //1. crear los estados que manejan la información del evento
   const [taskDetails, setTaskDetails] = useState(null);
@@ -33,7 +33,7 @@ function Task() {
   }
 
   if (fetching) {
-    return <h2>...is Loading</h2>;
+    return <h2><CircularProgress />;</h2>;
   }
 
   return (
