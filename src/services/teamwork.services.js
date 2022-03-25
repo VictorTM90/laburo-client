@@ -36,10 +36,10 @@ const addNewTeamworkService = (newTeamwork) =>{
       return service.patch (`${URL}/${id}/remove/${userId}`)
   }
 
-//   const quitMemberService = (id) =>{
+const quitMemberService = (id) =>{
 //       // este id es el del teamwork que se pasará al backend para localizarlo en la bd. 
-//       return service.patch (`${URL}/${id}/quit`)
-//   }
+       return service.patch (`${URL}/${id}/quit`)
+   }
 
   
 
@@ -50,7 +50,7 @@ const addNewTeamworkService = (newTeamwork) =>{
       deleteTeamworkService,
       updateTeamworkService,
       removeMemberService, 
-    //   quitMemberService,
+      quitMemberService,
       getTeamworkByIdCreator
       
   }
