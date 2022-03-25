@@ -3,8 +3,8 @@ import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { Link, useNavigate, useParams} from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate, useParams, } from "react-router-dom";
+import { useState, useEffect, useContext} from "react";
 import {
   getAllTasksService,
   getAllTeamworkTasksService,
@@ -13,9 +13,14 @@ import {
 
 import DashboardDetail from "./DashboardDetail";
 import Modal from "./Modal";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, ThemeProvider } from "@mui/material";
 import Button from '@mui/material/Button';
 import styles from "./Dashboard.module.css"
+
+import {ThemeContext} from "../context/theme.context"
+
+
+
 
 function Dashboard() {
   //1. crear el estado que maneja  la información
@@ -24,6 +29,9 @@ function Dashboard() {
   const [open, setOpen] = useState(false);
   const {id} = useParams(); 
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext)
+
+
 
   //2. el useEffect llama al componen que se está montando
   useEffect(() => {
@@ -111,42 +119,47 @@ function Dashboard() {
 
   return (
     <div>
+    <ThemeProvider theme={theme}>
      <div className={styles}>
       <Link to={"/task/new"}>
-        <Button variant="outlined" color="success">Add Task</Button>
+        <Button variant="outlined" color="btn">Add Task</Button>
       </Link>
       <Link to={"/teamwork/new"}>
-        <Button variant="outlined" color="success">Add Teamwork</Button>
+        <Button variant="outlined" color="btn">Add Teamwork</Button>
       </Link>
       <Link to={"/teamwork/"}>
         <Button variant="outlined" color="secondary">Your Teamworks</Button>
       </Link>
      </div>
-
+      </ThemeProvider>
       <div className='dashboardContainer'>
         <div className='fullCalendarContainer'>
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-            editable
+            editable={true}
+            
             initialView='timeGridWeek'
+            
             weekends
             headerToolbar={{
+              height:"large",
               left: "prev,next",
               center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay",
+              right: "dayGridMonth,timeGridWeek,timeGridDay"
             }}
             timeZone='UTC'
             slotMinTime='07:00:00'
             slotMaxTime='21:00:00'
             height={700}
+            width ={400}
             selectable
             dayMaxEvents
             events={allTasks}
             eventChange={handleDayChange}
             eventClick={handleShowTask}
-            eventColor='orange'
+            eventColor='#45ADA8'
+         
             // eventBorderColor="red"
-            all-day= "false"
            
           />
         </div>

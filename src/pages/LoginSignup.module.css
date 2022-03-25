@@ -1,31 +1,39 @@
 
 
-.form div {
+ /* .form div {
   margin-bottom: 15px;
   padding: 20px;
-  border-radius: 10px;
-}
+  /* border-radius: 10px
+  }; */
 
-.form input{
+
+/* .form input{
     border: 1px;
     border-radius: 10px;
     height: 25px;
-}
+} */
 
-.form label {
+/* .form label {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-} 
+}  */
 
 .form{
     position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%); 
-  height: 500px;
+  height: 400px;
   width: 300px;
-  background: #f2f2f2;
-  border-radius: 20px;
+  background: #f3fdff;
+  /* border-radius: 20px; */
 }
+/* .MuiBox-root{
+  background-color: #f2f2f2;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+} */
 

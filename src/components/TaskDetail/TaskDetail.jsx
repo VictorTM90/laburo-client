@@ -1,6 +1,6 @@
 import { Button, CircularProgress } from "@mui/material";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import {
   addNewTasksService,
@@ -8,6 +8,9 @@ import {
 } from "../../services/tasks.services";
 import { getTeamworkByIdCreator } from "../../services/teamwork.services";
 import styles from "./TaskDetail.module.css";
+
+import { ThemeProvider } from "@mui/material/styles";
+import { ThemeContext } from "../../context/theme.context";
 
 function TaskDetail({ task }) {
   const [taskDetails, setTaskDetails] = useState(
@@ -23,6 +26,7 @@ function TaskDetail({ task }) {
       isDone: "",
     }
   );
+  const { theme } = useContext(ThemeContext);
 
   const location = useLocation();
   const { id } = useParams();
@@ -236,14 +240,15 @@ function TaskDetail({ task }) {
 
           <div>
             {editMode && (
+              <ThemeProvider theme={theme}>
               <Button
-                variant='contained'
-                color='success'
+                variant='outlined'
+                color='btn'
                 size='small'
                 type='submit'>
-                {" "}
                 Guardar
               </Button>
+              </ThemeProvider>
             )}
           </div>
         </form>
@@ -262,9 +267,11 @@ function TaskDetail({ task }) {
           {taskDetails.teamwork && <p>Team: {taskDetails.teamwork.name}</p>}
 
           {id && (
+            <ThemeProvider theme={theme}>
         <Button variant="outlined" color="secondary" onClick={() => setEditMode(!editMode)}>
           {editMode ? "Cancelar" : "Modificar"}
         </Button>
+        </ThemeProvider>
       )}
         </>
       )}

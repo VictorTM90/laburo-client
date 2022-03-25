@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   deleteTeamworkService,
   getAllTeamworkService,
 } from "../../services/teamwork.services";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { CircularProgress } from "@mui/material";
+
+import { CircularProgress, ThemeProvider } from "@mui/material";
 import styles from "./TeamworkList.module.css";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -13,9 +13,12 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import {ThemeContext} from "../../context/theme.context"
+
 function TeamworkList() {
   const [allTeamwork, setAllTeamwork] = useState([]);
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext)
 
   useEffect(() => {
     getAllTeamworks();
@@ -58,10 +61,11 @@ function TeamworkList() {
         {allTeamwork.map((eachTeam) => {
           return (
             <div key={eachTeam._id}>
-              <Card sx={{ minWidth: 275, maxWidth: 500 }}>
-                <CardContent>
-                  <Link to={`/teamwork/${eachTeam._id}`}>
-                    <Typography variant='h5' component='div'>
+            <ThemeProvider theme={theme}>
+              <Card   sx={{ minWidth: 275, maxWidth: 500 }} >
+                <CardContent >
+                  <Link to={`/teamwork/${eachTeam._id}`} >
+                    <Typography variant='h5' component='div' color ="primary">
                       {eachTeam.name}
                     </Typography>
                     {eachTeam.members.map((members) => {
@@ -78,6 +82,7 @@ function TeamworkList() {
                   </Button>
                 </CardActions>
               </Card>
+              </ThemeProvider>
             </div>
           );
         })}

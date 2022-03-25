@@ -1,6 +1,6 @@
 import "./App.css";
 //*HOOKS Y PAQUETES
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { verifyService } from "./services/auth.services";
 
@@ -23,7 +23,7 @@ import Logout from "./pages/Logout";
 
 function App() {
   //
-  const token = ""  
+ 
   useEffect(() => {
     //propiedades del localStorage getItem// setItem y removeItem
     const  token = localStorage.getItem("authToken");
@@ -32,14 +32,18 @@ function App() {
     }
     //conexion servidor y validar
   }, []);
+  // const location = useLocation();
+  // const [showNav, setShowNav] = useState(false);
 
- 
+  // if( !location.pathname.includes("/signup" || "/login")) setShowNav(!showNav)
+//  showNav &&
+       
+      
 
   return (
     <div className='App'>
-
+     
       <NavbarMUI />
-      
       <Routes>
 
         <Route path='/login' element={<Login />} />
