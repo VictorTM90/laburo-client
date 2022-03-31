@@ -22,7 +22,7 @@ const getTasksDetailsService = (id) => {
 
 const deleteTasksService = (id) => {
   return service.delete(`${URL}/${id}`);
-  //devolver directamente lo que viene del back
+  
 };
 
 const updateTasksService = (id, updateTask) => {

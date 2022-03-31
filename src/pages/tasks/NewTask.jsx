@@ -16,11 +16,9 @@ function NewTask() {
   const [isUrgent, setIsUrgent] = useState(false);
   const [isDone, setIsDone] = useState("To do");
   const navigate = useNavigate();
-  console.log(start);
   const handleSubmit = async (event) => {
     // prevenir el comportamiento del form del event
     event.preventDefault();
-    console.log(event)
     //elemento que está creando el usuario
     const newTask = {
       start, 

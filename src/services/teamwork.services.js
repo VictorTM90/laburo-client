@@ -8,11 +8,8 @@ const URL = '/teamwork'
     return service.get(`${URL}/`)
 } 
 
-
-
 const addNewTeamworkService = (newTeamwork) =>{
 
-      // pasamos como parámetro lo que recogemos en el form 
   return service.post(`${URL}/`, newTeamwork)
 }; 
 
@@ -39,10 +36,10 @@ const addNewTeamworkService = (newTeamwork) =>{
       return service.patch (`${URL}/${id}/remove/${userId}`)
   }
 
-  const quitMemberService = (id) =>{
-      // este id es el del teamwork que se pasará al backend para localizarlo en la bd. 
-      return service.patch (`${URL}/${id}/quit`)
-  }
+const quitMemberService = (id) =>{
+//       // este id es el del teamwork que se pasará al backend para localizarlo en la bd. 
+       return service.patch (`${URL}/${id}/quit`)
+   }
 
   
 
