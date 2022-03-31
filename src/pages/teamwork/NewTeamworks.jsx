@@ -199,9 +199,9 @@ function NewTeamworks() {
             </div>
           </div>
 
-          {filteredMembers.map((eachmember, index) => {
+          {filteredMembers.map((eachmember) => {
             return (
-               <div key={index} className= "members-teamwork-container">
+               <div key={eachmember._id} className= "members-teamwork-container">
                 <li className="añadir-miembro">{eachmember.name}</li>
 
                 <ThemeProvider theme={theme}>
