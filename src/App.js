@@ -23,6 +23,7 @@ import Logout from "./pages/Logout";
 
 function App() {
   //
+  
  
   useEffect(() => {
     //propiedades del localStorage getItem// setItem y removeItem
@@ -42,8 +43,9 @@ function App() {
 
   return (
     <div className='App'>
-     
+  
       <NavbarMUI />
+  
       <Routes>
 
         <Route path='/login' element={<Login />} />

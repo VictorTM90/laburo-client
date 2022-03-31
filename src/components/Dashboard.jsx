@@ -151,7 +151,7 @@ function Dashboard() {
             slotMinTime='07:00:00'
             slotMaxTime='21:00:00'
             height={700}
-            width ={400}
+            // width={400}
             selectable
             dayMaxEvents
             events={allTasks}

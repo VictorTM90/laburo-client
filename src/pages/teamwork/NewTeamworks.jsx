@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation} from "react-router-dom";
 import Dashboard from "../../components/Dashboard.jsx";
 import {
   addNewTeamworkService,
@@ -31,7 +31,8 @@ function NewTeamworks() {
   const [filteredMembers, setFilteredMembers] = useState([]);
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
-
+  const location = useLocation()
+  
   useEffect(() => {
     //solo tenemos el teamworkDetail pero cuando tenemos id
     if (id) {
@@ -121,6 +122,16 @@ function NewTeamworks() {
   //Función para eliminar un miembro del equipo
 
   const handleDeleteMember = async (idUser) => {
+    
+    if (location.pathname.includes("/teamwork/new")){
+     
+      const filtMembers = teamworkDetails.members.filter(
+        (member) => member._id !== idUser
+      );
+      setTeamworkDetails({ ...teamworkDetails, members: filtMembers });
+
+    } else {
+    
     try {
       const filtMembers = teamworkDetails.members.filter(
         (member) => member._id !== idUser
@@ -130,14 +141,17 @@ function NewTeamworks() {
     } catch (error) {
       navigate("/error");
     }
-  };
-
+  }; 
+  
   if (!members || !teamworkDetails) {
     return (
       <h3>
         <CircularProgress />
       </h3>
-    );
+    );}
+
+
+
   }
 
   const showButton = () => {
