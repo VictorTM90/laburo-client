@@ -12,19 +12,19 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { ThemeContext } from "../context/theme.context";
 
-function Login() {
+function Login(props) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      navigate("/profile");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("authToken");
+  //   if (token) {
+  //     navigate("/profile");
+  //   }
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,10 +39,14 @@ function Login() {
       localStorage.setItem("authToken", authToken);
       localStorage.setItem("id", _id);
 
+      props.setIsLoggedIn(true)
+
       navigate("/profile");
     } catch (err) {
       if (err.response?.status === 400) {
         setErrorMessage(err.response.data.errorMessage);
+      } else {
+        navigate("/error")
       }
     }
   };

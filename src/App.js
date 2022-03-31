@@ -23,14 +23,20 @@ import Logout from "./pages/Logout";
 
 function App() {
   //
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   
- 
+  
   useEffect(() => {
+    if(isLoggedIn){
+    verifyUser();
+  }
+    
     //propiedades del localStorage getItem// setItem y removeItem
-    const  token = localStorage.getItem("authToken");
-    if (token) {
-      verifyService();
-    }
+    // const  token = localStorage.getItem("authToken");
+    // if (token) {
+    //   verifyService();
+
+    // }
     //conexion servidor y validar
   }, []);
   // const location = useLocation();
@@ -39,16 +45,27 @@ function App() {
   // if( !location.pathname.includes("/signup" || "/login")) setShowNav(!showNav)
 //  showNav &&
        
-      
+    const verifyUser = async () =>{
+      try {
+        await verifyService()
+        setIsLoggedIn(true);
+      }
+      catch(err){setIsLoggedIn(false)}
+    }
+
+  
+
+
 
   return (
     <div className='App'>
-  
-      <NavbarMUI />
+      
+      <NavbarMUI  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+      
   
       <Routes>
 
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/logout' element={<Logout />} />
 
