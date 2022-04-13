@@ -92,23 +92,23 @@ App.js
 
 Anon only:
 
-- <Login />
-- <Signup />
-- <Error />
+- Login
+- Signup 
+- Error 
 
 User only:
 
-- <Logout />
-- <Profile /> : 
+- Logout 
+- Profile  : 
     - component: 
-        - <Dashboard/>: user personal calendar
+        - Dashboard: user personal calendar
             -component: 
-            - <Modal><DashboardDetail/></Modal>: user can read its own tasks by clicking in them. The information will be displayed as a modal. User can delete task directly.
-- <Task/> :
+            - Modal (component MUI) - DashboardDetail - Modal: user can read its own tasks by clicking in them. The information will be displayed as a modal. User can delete task directly.
+- Task :
     component:
-    -  <TaskDetail/>: read and update tasks created by user.
-- <NewTeamworks/>: create, read and update teamworks
-- <TeamworkList/>: list of all teamworks,  user can delete.
+    -  TaskDetail: read and update tasks created by user.
+- NewTeamworks: create, read and update teamworks
+- TeamworkList: list of all teamworks,  user can delete.
 
 ### Git
 
