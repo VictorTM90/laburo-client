@@ -30,21 +30,9 @@ function App() {
     if(isLoggedIn){
     verifyUser();
   }
-    
-    //propiedades del localStorage getItem// setItem y removeItem
-    // const  token = localStorage.getItem("authToken");
-    // if (token) {
-    //   verifyService();
-
-    // }
-    //conexion servidor y validar
+ 
   }, []);
-  // const location = useLocation();
-  // const [showNav, setShowNav] = useState(false);
-
-  // if( !location.pathname.includes("/signup" || "/login")) setShowNav(!showNav)
-//  showNav &&
-       
+         
     const verifyUser = async () =>{
       try {
         await verifyService()
@@ -52,10 +40,6 @@ function App() {
       }
       catch(err){setIsLoggedIn(false)}
     }
-
-  
-
-
 
   return (
     <div className='App'>
