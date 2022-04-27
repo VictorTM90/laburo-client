@@ -19,13 +19,6 @@ function Login(props) {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("authToken");
-  //   if (token) {
-  //     navigate("/profile");
-  //   }
-  // }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
