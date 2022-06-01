@@ -53,16 +53,12 @@ function App() {
       catch(err){setIsLoggedIn(false)}
     }
 
-  
-
-
 
   return (
     <div className='App'>
       
       <NavbarMUI  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       
-  
       <Routes>
 
         <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn}/>} />

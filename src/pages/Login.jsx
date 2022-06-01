@@ -34,16 +34,19 @@ function Login(props) {
     try {
       // contactar con el server para logear al usuario
       const response = await loginService(user);
+      
       const { authToken, _id } = response;
 
       localStorage.setItem("authToken", authToken);
       localStorage.setItem("id", _id);
 
       props.setIsLoggedIn(true)
-
       navigate("/profile");
+
     } catch (err) {
-      if (err.response?.status === 400) {
+     
+      //Error: TypeError: Cannot destructure property 'authToken' of 'response' as it is undefined.
+      if (err.response?.status === 400 || err.response?.status === 401) {
         setErrorMessage(err.response.data.errorMessage);
       } else {
         navigate("/error")

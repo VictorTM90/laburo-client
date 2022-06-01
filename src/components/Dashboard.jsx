@@ -20,8 +20,6 @@ import styles from "./Dashboard.module.css"
 import {ThemeContext} from "../context/theme.context"
 
 
-
-
 function Dashboard() {
   //1. crear el estado que maneja  la información
   const [allTasks, setAllTasks] = useState();
@@ -30,8 +28,6 @@ function Dashboard() {
   const {id} = useParams(); 
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext)
-
-
 
   //2. el useEffect llama al componen que se está montando
   useEffect(() => {

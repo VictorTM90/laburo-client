@@ -117,23 +117,34 @@ function TaskDetail({ task }) {
   //las funciones que no son de react (no modifican ningún estado) deberían de estar en un archivo de js
   const formatedDateInput = (date) => {
     const splitedDate = new Date(date).toISOString().split(":");
+    console.log(splitedDate, "splited");
 
     //eliminar los segundos del formato de la fecha
     return `${splitedDate[0]}:${splitedDate[1]}`;
   };
 
   const formatedDateView = (date) => {
-    const options = {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: false,
-    };
-    return new Intl.DateTimeFormat(navigator.language, options).format(
-      new Date(date)
-    );
+  // console.log(date,  "DATE")
+  //   const options = {
+  //     day: "numeric",
+  //     year: "numeric",
+  //     month: "numeric",
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //     hour12: false,
+  //   };
+
+    let formatedDate = new Date(date).toISOString().split(":")
+    let removeT = formatedDate[0].split("T")
+    let reverseDay = removeT[0].split("-").reverse().join("-")
+    
+  
+    console.log(removeT, "t")
+    return `${reverseDay}  ${removeT[1]}:${formatedDate[1]}`
+    //check the value
+    // return new Intl.DateTimeFormat("en-ES", options).format(
+    //   new Date(date)
+    // );
   };
 
   if (!taskDetails) {

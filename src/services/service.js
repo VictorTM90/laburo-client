@@ -17,6 +17,7 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    console.log(error, "ERROR")
     if (error.response.status === 400) {
       return error
     } 
