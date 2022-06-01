@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# LABURO
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Laburo is a calendar platform for organising all kind of tasks. User can create a teamwork with other users and assing tasks.
 
-In the project directory, you can run:
+## User Stories
 
-### `npm start`
+- **Signup:** As an anon I can sign up in the platform so that I can start adding tasks to my calendar.
+- **Login:** As a user I can login to the platform so I can see my calendar and start adding tasks or create a teamwork.
+- **Logout:** As a user I can log out from the platform so no one else can use it.
+- **Add, read, edit, and delete tasks:** As a user I can add a task to my calendar to organise my time and modify or delete them.
+- **Create, read, edit, and delete teamworks:** As a user I can create a new teamwork adding other users with a searchbar. I can edit and delete the whole teamwork or delete just a member. If I assign a task to a specific member, they will have the task in their personal dashboard.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Backlog:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Teamwork:
 
-### `npm test`
+- The assigned tasks appear in the team dashboard and in the member personal dashboard.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Drag and resize the task in the calendar.
 
-### `npm run build`
+- Validations in the members searchbar.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Client
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Services
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+auth.services.js
 
-### `npm run eject`
+```
+- signupService: /auth/signup,
+- loginService: /auth/login,
+- verifyService: /auth/verify,
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+tasks.services.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+- getAllTasksService: service.getservice.get(`/tasks/`)
+- getAllTeamworkTasksService: service.get(`/tasks/teamwork/${id}`
+- addNewTasksService: service.post(`/tasks/`, newTask)
+- getTasksDetailsService: service.get(`/tasks/${id}`)
+- deleteTasksService: service.delete(`/tasks/${id}`)
+- updateTasksService: service.patch(`/tasks/${id}`, updateTask)
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+teamwork.services.js
 
-## Learn More
+```
+- getAllTeamworkService: service.get(`/teamwork/`)
+- addNewTeamworkService: service.post(`/teamwork/`, newTeamwork)
+- getTeamworkDetailsService: service.get(`/teamwork/${id}`)
+- getTeamworkByIdCreator: service.get(`/teamwork/creatorteams`)
+- deleteTeamworkService: service.delete(`/teamwork/${id}`)
+- updateTeamworkService: service.patch(`/teamwork/${id}`, updateTeamwork)
+- removeMemberService: service.patch (`/teamwork/${id}/remove/${userId}`)
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+user.services.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+- getAllUsersService: service.get(`/user/`)
+- getUsersDetailsService: service.get(`/user/${id}`)
+```
 
-### Code Splitting
+## Frontend Routes && general component
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+App.js
 
-### Analyzing the Bundle Size
+```
+- component:<NavbarMUI/>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+- path='/login' element={<Login />},
+- path='/signup' element={<Signup />},
+- path='/logout' element={<Logout />},
+- path='/profile' element={<Profile />},
+- path='/task/new' element={<TaskDetail />},
+- path='/task/:id' element={<Task />},
+- path='/teamwork/new' element={<NewTeamworks />},
+- path='/teamwork/:id' element={<NewTeamworks />},
+- path='/teamwork/:id/edit' element={<NewTeamworks />},
+- path='/teamwork' element={<TeamworkList />},
+- path='/error' element={<Error />}
+- path='*' element={<Login />}
+```
 
-### Making a Progressive Web App
+## Pages && components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Anon only:
 
-### Advanced Configuration
+- Login
+- Signup 
+- Error 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+User only:
 
-### Deployment
+- Logout 
+- Profile  : 
+    - component: 
+        - Dashboard: user personal calendar
+            -component: 
+            - Modal (component MUI) - DashboardDetail - Modal: user can read its own tasks by clicking in them. The information will be displayed as a modal. User can delete task directly.
+- Task :
+    component:
+    -  TaskDetail: read and update tasks created by user.
+- NewTeamworks: create, read and update teamworks
+- TeamworkList: list of all teamworks,  user can delete.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Git
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://github.com/VictorTM90/laburo-server
+https://github.com/VictorTM90/laburo-client
+https://laburo.netlify.app/
