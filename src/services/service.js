@@ -17,9 +17,9 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    console.log(error, "ERROR")
-    if (error.response.status === 400) {
-      return error
+ 
+    if (error.response.status === 403) {
+      return Promise.reject(error.response)
     } 
     if (error.response.status === 401) {
       //cuando queramos redirigir el navegador

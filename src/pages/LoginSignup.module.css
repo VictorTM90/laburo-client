@@ -18,6 +18,10 @@
   flex-direction: column;
   justify-content: flex-start;
 }  */
+.error{
+  color: red;
+  font-size: 12px;
+}
 
 .form{
     position: absolute;

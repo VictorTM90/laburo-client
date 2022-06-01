@@ -93,8 +93,16 @@ function TaskDetail({ task }) {
     if (e.target.name === "assigned" && e.target.value === "-----------") {
       e.target.value = localStorage.getItem("id");
     }
+    
     //para acceder a un campo de un objeto dimámico siempre utilizar []
     setTaskDetails({ ...taskDetails, [e.target.name]: e.target.value });
+  };
+
+  const handleDateTimeChange = (e) => {
+    console.log(e.target.value, "HANDLEDATETIME")
+    //setTaskDetails({ ...taskDetails, [e.target.name]: new Date(e.target.value.replace('T',' ').replace('-','/')+"Z" )});
+    setTaskDetails({ ...taskDetails, [e.target.name]: `${e.target.value}Z` });
+ 
   };
 
   const handleSubmit = async (e) => {
@@ -114,12 +122,9 @@ function TaskDetail({ task }) {
     }
   };
 
-  //las funciones que no son de react (no modifican ningún estado) deberían de estar en un archivo de js
   const formatedDateInput = (date) => {
     const splitedDate = new Date(date).toISOString().split(":");
-    console.log(splitedDate, "splited");
 
-    //eliminar los segundos del formato de la fecha
     return `${splitedDate[0]}:${splitedDate[1]}`;
   };
 
@@ -138,8 +143,6 @@ function TaskDetail({ task }) {
     let removeT = formatedDate[0].split("T")
     let reverseDay = removeT[0].split("-").reverse().join("-")
     
-  
-    console.log(removeT, "t")
     return `${reverseDay}  ${removeT[1]}:${formatedDate[1]}`
     //check the value
     // return new Intl.DateTimeFormat("en-ES", options).format(
@@ -185,7 +188,7 @@ function TaskDetail({ task }) {
               type='datetime-local'
               name='start'
               value={formatedDateInput(taskDetails.start)}
-              onChange={handleChange}
+              onChange={handleDateTimeChange}
             />
           </div>
 
@@ -196,7 +199,7 @@ function TaskDetail({ task }) {
               type='datetime-local'
               name='end'
               value={formatedDateInput(taskDetails.end)}
-              onChange={handleChange}
+              onChange={handleDateTimeChange}
             />
           </div>
 

@@ -37,16 +37,22 @@ function Login(props) {
       navigate("/profile");
 
     } catch (err) {
-     
-      //Error: TypeError: Cannot destructure property 'authToken' of 'response' as it is undefined.
-      if (err.response?.status === 400 || err.response?.status === 401) {
-        setErrorMessage(err.response.data.errorMessage);
-      } else {
-        navigate("/error")
-      }
+      setErrorMessage(err.data.errorMessage)
     }
   };
 
+  const handlePassWord = (e) => {
+    setPassword(e.target.value)
+    setErrorMessage()
+  }
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value)
+    setErrorMessage()
+  }
+
+
+  
   return (
     <div className={styles.form}>
       <div className="login-container">
@@ -68,7 +74,7 @@ function Login(props) {
               type="text"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmail}
             />
             <br />
 
@@ -81,7 +87,7 @@ function Login(props) {
               type="password"
               name="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePassWord}
             />
             <br />
            
@@ -98,7 +104,7 @@ function Login(props) {
           </ThemeProvider>
         </Box>
 
-        <p>{errorMessage}</p>
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
         <p>¿Es tu primera vez en LABURO?</p>
         <Link to="/signup" color="grisazulado" underline="none">
